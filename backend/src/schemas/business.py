@@ -1,8 +1,17 @@
 from pydantic import BaseModel,Field,model_validator
 from typing import Literal
-from datetime import date
+from datetime import date,datetime
 Dimension=Literal['venue','play','channel','month']
 class Login(BaseModel):email:str;password:str
+class GateEventInput(BaseModel):
+ device:str=Field(min_length=1,max_length=40)
+ event_no:str=Field(min_length=1,max_length=40)
+ ticket:str=Field(min_length=1,max_length=60)
+ session:str=Field(min_length=1,max_length=60)
+ time:datetime
+ action:Literal['in','out']
+class GateBatchInput(BaseModel):
+ records:list[GateEventInput]=Field(min_length=1,max_length=500)
 class SettlementInput(BaseModel):
  code:str=Field(min_length=1,max_length=60)
  day:date

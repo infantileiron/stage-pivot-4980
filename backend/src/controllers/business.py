@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from src.models.entities import Pivot,Review
+from src.models.entities import Pivot,Review,Verification
 from src.services.analysis import key
 def ensure_pivot(s,i):
  r=s.get(Pivot,i)
@@ -8,6 +8,10 @@ def ensure_pivot(s,i):
 def ensure_review(s,i):
  r=s.get(Review,i)
  if not r:raise HTTPException(404,'差异复核不存在')
+ return r
+def ensure_verification(s,i):
+ r=s.get(Verification,i)
+ if not r:raise HTTPException(404,'核验批次不存在')
  return r
 def cell(s,i,a,b):
  r=ensure_pivot(s,i)
